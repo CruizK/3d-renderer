@@ -1,5 +1,6 @@
 #include "core/Log.h"
 #include "core/Window.h"
+#include <glm/glm.hpp>
 
 int main()
 {
