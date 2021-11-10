@@ -6,10 +6,10 @@ class Log
 public:
 	static void Init();
 
-	inline static std::shared_ptr<spdlog::logger> &GetCoreLogger() { return _coreLogger; }
+	inline static std::shared_ptr<spdlog::logger> &GetCoreLogger() { return m_CoreLogger; }
 
 private:
-	static std::shared_ptr<spdlog::logger> _coreLogger;
+	static std::shared_ptr<spdlog::logger> m_CoreLogger;
 };
 
 #define CORE_ERROR(...) Log::GetCoreLogger()->error(__VA_ARGS__)

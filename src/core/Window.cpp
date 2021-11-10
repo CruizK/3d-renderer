@@ -16,7 +16,7 @@ void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLuint se
 		CORE_TRACE("[OpenGL Debug]: {0}", message);
 }
 
-Window::Window() : _window(nullptr)
+Window::Window() : m_Window(nullptr)
 {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -25,14 +25,14 @@ Window::Window() : _window(nullptr)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); Mac omega
 
-	_window = glfwCreateWindow(800, 600, "OpenGL Window", NULL, NULL);
-	if (_window == nullptr)
+	m_Window = glfwCreateWindow(800, 600, "OpenGL Window", NULL, NULL);
+	if (m_Window == nullptr)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		return;
 	}
-	glfwMakeContextCurrent(_window);
+	glfwMakeContextCurrent(m_Window);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -53,7 +53,7 @@ void Window::Run()
 {
 	SceneManager::ChangeScene(new MainScene());
 
-	while (!glfwWindowShouldClose(_window))
+	while (!glfwWindowShouldClose(m_Window))
 	{
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -63,7 +63,7 @@ void Window::Run()
 		SceneManager::Draw();
 
 		glfwPollEvents();
-		glfwSwapBuffers(_window);
+		glfwSwapBuffers(m_Window);
 	}
 
 	glfwTerminate();

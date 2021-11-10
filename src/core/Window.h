@@ -10,5 +10,5 @@ public:
 	void Run();
 
 private:
-	GLFWwindow *_window;
+	GLFWwindow *m_Window;
 };
