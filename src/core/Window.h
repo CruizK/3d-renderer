@@ -1,15 +1,14 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-
 class Window
 {
 public:
-  Window();
-  ~Window();
+	Window();
+	~Window();
 
-  void Run();
+	void Run();
 
 private:
-  GLFWwindow* _window;
+	GLFWwindow *_window;
 };

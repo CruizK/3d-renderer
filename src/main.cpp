@@ -6,9 +6,9 @@ int main()
 {
 	{
 		Log::Init();
-		Window* window = new Window();
+		Window *window = new Window();
 		window->Run();
 		delete window;
 	}
-  return 0;
+	return 0;
 }
