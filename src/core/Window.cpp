@@ -5,6 +5,8 @@
 #include <gfx/buffers/VertexBuffer.h>
 #include <gfx/buffers/VertexArray.h>
 #include <gfx/Shader.h>
+#include <scenes/SceneManager.h>
+#include <scenes/MainScene.h>
 
 void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLuint severity, GLsizei length, const char *message, const void *userParam)
 {
@@ -49,32 +51,16 @@ Window::~Window()
 
 void Window::Run()
 {
-	float verticies[] = {
-		-0.5f, -0.5f, 0,
-		0.5f, -0.5f, 0,
-		0.0f, 0.5f, 0
-	};
-
-	Shader shader;
-	shader.CreateFromFile("res/shaders/base.shader");
-	VertexBuffer vbo;
-	vbo.Create(verticies, sizeof(verticies));
-	VertexArray vao;
-	VertexBufferLayout layout;
-	layout.PushFloat(3); // X, Y, Z
-
-	vao.AddBuffer(vbo, layout);
+	SceneManager::ChangeScene(new MainScene());
 
 	while (!glfwWindowShouldClose(_window))
 	{
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+		SceneManager::Update(1.0f);
 
-		shader.Use();
-		vao.Bind();
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-
+		SceneManager::Draw();
 
 		glfwPollEvents();
 		glfwSwapBuffers(_window);
