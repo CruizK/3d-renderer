@@ -20,7 +20,7 @@ Window::Window() : m_Window(nullptr)
 {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); Mac omega
@@ -42,6 +42,7 @@ Window::Window() : m_Window(nullptr)
 	glViewport(0, 0, 800, 600);
 
 	glEnable(GL_DEBUG_OUTPUT);
+	glEnable(GL_DEPTH_TEST);
 	glDebugMessageCallback(MessageCallback, 0);
 }
 
@@ -57,7 +58,7 @@ void Window::Run()
 	{
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		SceneManager::Update(1.0f);
 
 		SceneManager::Draw();

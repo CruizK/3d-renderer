@@ -13,9 +13,9 @@ IndexBuffer::~IndexBuffer()
 
 void IndexBuffer::Create(u32 *data, u32 size)
 {
-	glGenBuffers(1, &m_RendererID);
+	glCreateBuffers(1, &m_RendererID);
 	Bind();
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+	glNamedBufferStorage(m_RendererID, size, data, GL_STATIC_DRAW);
 }
 
 void IndexBuffer::Bind() const

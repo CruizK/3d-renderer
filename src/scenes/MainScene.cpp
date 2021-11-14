@@ -12,10 +12,6 @@ MainScene::~MainScene()
 
 void MainScene::Init()
 {
-	m_Shader.CreateFromFile("../res/shaders/base.shader");
-	m_Camera = PerspectiveCamera(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-
-
 	// Vertices for a cube
 	float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -61,6 +57,12 @@ void MainScene::Init()
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
+	m_Shader.CreateFromFile("../res/shaders/base.shader");
+	m_Texture.LoadFromFile("../res/textures/container.jpg");
+	m_Camera = PerspectiveCamera(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+
+
+
 	m_VertexArray.Bind();
 
 	m_VertexBuffer.Create(vertices, sizeof(vertices));
@@ -69,6 +71,7 @@ void MainScene::Init()
 	m_Layout.PushFloat(2); // U, V
 
 	m_VertexArray.AddBuffer(m_VertexBuffer, m_Layout);
+
 }
 
 void MainScene::Update(float dt)
@@ -87,6 +90,7 @@ void MainScene::Draw()
 	m_Shader.SetMat4("view", m_Camera.GetViewMatrix());
 	m_Shader.SetMat4("projection", m_Camera.GetProjectionMatrix());
 
+	m_Texture.Bind(0);
 	m_VertexArray.Bind();
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 }

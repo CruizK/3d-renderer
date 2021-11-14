@@ -12,5 +12,5 @@
 - [ ] Framebuffer and probably a library integration to output an image from the current render state
 - [ ] Material System
 - [ ] 3D Model Loading
-- [ ] 2D Texture Loading for Materials
+- [X] 2D Texture Loading
 - [ ] Lighting System

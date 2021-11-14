@@ -4,6 +4,7 @@
 #include <gfx/Shader.h>
 #include <gfx/buffers/VertexArray.h>
 #include <gfx/buffers/IndexBuffer.h>
+#include <gfx/Texture2D.h>
 #include <gfx/PerspectiveCamera.h>
 
 class MainScene : public Scene
@@ -18,6 +19,7 @@ public:
 
 private:
 	Shader m_Shader;
+	Texture2D m_Texture;
 	PerspectiveCamera m_Camera;
 	VertexBuffer m_VertexBuffer;
 	VertexArray m_VertexArray;
