@@ -2,8 +2,7 @@
 #version 450 core
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec2 aTexCoord;
-
-out vec2 TexCoord;
+layout (location = 2) in vec3 aNormal;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -16,13 +15,10 @@ void main()
 
 #fragment
 #version 450 core
+
 out vec4 FragColor;
-
-in vec2 TexCoord;
-
-uniform sampler2D uTexture;
 
 void main()
 {
-	FragColor = texture(uTexture, TexCoord);
+	FragColor = vec4(1.0);
 }

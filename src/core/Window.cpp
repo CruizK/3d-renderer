@@ -34,6 +34,10 @@ Window::Window() : m_Window(nullptr)
 	}
 	glfwMakeContextCurrent(m_Window);
 
+	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
+		glViewport(0, 0, width, height);
+	});
+
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
@@ -44,6 +48,7 @@ Window::Window() : m_Window(nullptr)
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEPTH_TEST);
 	glDebugMessageCallback(MessageCallback, 0);
+	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 Window::~Window()
@@ -52,15 +57,18 @@ Window::~Window()
 
 void Window::Run()
 {
-	SceneManager::ChangeScene(new MainScene());
+	SceneManager::ChangeScene(new MainScene(this));
 
 	while (!glfwWindowShouldClose(m_Window))
 	{
+		float deltaTime = 0.0f;
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+		SceneManager::Update(deltaTime);
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		SceneManager::Update(1.0f);
-
 		SceneManager::Draw();
 
 		glfwPollEvents();

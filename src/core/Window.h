@@ -1,3 +1,5 @@
+#pragma once
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -9,6 +11,9 @@ public:
 
 	void Run();
 
+	GLFWwindow* GetRawPtr() { return m_Window; }
+
 private:
-	GLFWwindow *m_Window;
+	float lastFrame = 0.0f;
+	GLFWwindow* m_Window;
 };

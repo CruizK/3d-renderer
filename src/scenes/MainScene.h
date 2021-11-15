@@ -6,11 +6,12 @@
 #include <gfx/buffers/IndexBuffer.h>
 #include <gfx/Texture2D.h>
 #include <gfx/PerspectiveCamera.h>
+#include <core/Window.h>
 
 class MainScene : public Scene
 {
 public:
-	MainScene();
+	MainScene(Window* window);
 	~MainScene();
 
 	void Init() override;
@@ -18,7 +19,10 @@ public:
 	void Draw() override;
 
 private:
+	glm::vec3 m_LightPos;
+	Window* m_Window;
 	Shader m_Shader;
+	Shader m_WhiteShader;
 	Texture2D m_Texture;
 	PerspectiveCamera m_Camera;
 	VertexBuffer m_VertexBuffer;
