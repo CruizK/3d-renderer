@@ -81,7 +81,12 @@ void MainScene::Init()
 
 void MainScene::Update(float dt)
 {
-	m_Camera.Update(dt);
+	//m_Camera.Update(dt);
+}
+
+void MainScene::ImGui()
+{
+
 }
 
 void MainScene::Draw()

@@ -26,6 +26,12 @@ void SceneManager::Update(float dt)
 		m_Scene->Update(dt);
 }
 
+void SceneManager::ImGui()
+{
+	if(m_Scene != nullptr)
+		m_Scene->ImGui();
+}
+
 void SceneManager::Draw()
 {
 	if(m_Scene != nullptr)

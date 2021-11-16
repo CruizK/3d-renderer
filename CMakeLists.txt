@@ -14,6 +14,7 @@ add_subdirectory(deps/glad)
 add_subdirectory(deps/spdlog-1.9.2)
 add_subdirectory(deps/glm)
 add_subdirectory(deps/stb_image)
+add_subdirectory(deps/imgui)
 
 file(GLOB_RECURSE SRC_FILES "src/*.h" "src/*.cpp")
 
@@ -22,6 +23,7 @@ set_target_properties(
   glad
   spdlog
   stb_image
+  imgui
   uninstall
   PROPERTIES
     FOLDER "deps"
@@ -29,9 +31,8 @@ set_target_properties(
 
 add_executable(Sandbox ${SRC_FILES})
 
-
 target_include_directories(Sandbox PRIVATE src)
 target_compile_features(Sandbox PUBLIC cxx_std_11)
-target_link_libraries(Sandbox PUBLIC glfw OpenGL::GL glad spdlog stb_image glm)
+target_link_libraries(Sandbox PUBLIC glfw OpenGL::GL glad spdlog stb_image glm imgui)
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SRC_FILES})

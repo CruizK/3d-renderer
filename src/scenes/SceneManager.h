@@ -10,6 +10,7 @@ public:
 	static void ChangeScene(Scene* scene);
 
 	static void Update(float dt);
+	static void ImGui();
 	static void Draw();
 
 private:

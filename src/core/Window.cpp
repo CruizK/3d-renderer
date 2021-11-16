@@ -8,6 +8,10 @@
 #include <scenes/SceneManager.h>
 #include <scenes/MainScene.h>
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
+
 void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLuint severity, GLsizei length, const char *message, const void *userParam)
 {
 	if (type == GL_DEBUG_TYPE_ERROR)
@@ -45,10 +49,15 @@ Window::Window() : m_Window(nullptr)
 
 	glViewport(0, 0, 800, 600);
 
+	ImGui::CreateContext();
+	ImGui::StyleColorsDark();
+	
+	ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
+	ImGui_ImplOpenGL3_Init("#version 450 core");
+
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEPTH_TEST);
 	glDebugMessageCallback(MessageCallback, 0);
-	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 Window::~Window()
@@ -70,6 +79,16 @@ void Window::Run()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		SceneManager::Draw();
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		SceneManager::ImGui();
+
+		ImGui::ShowDemoWindow();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
