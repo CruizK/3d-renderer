@@ -89,7 +89,7 @@ void MainScene::Draw()
 	// Big Square
 	m_Shader.Use();
 
-	glm::vec3 lightPos = glm::vec3(1.0f, 0.0f, 1.0f);
+	glm::vec3 lightPos = glm::vec3(1.0f, 1.0f, 1.0f);
 	lightPos = glm::rotateY(lightPos, (float)glfwGetTime() * glm::radians(25.0f));
 
 	glm::mat4 model = glm::mat4(1.0f);
