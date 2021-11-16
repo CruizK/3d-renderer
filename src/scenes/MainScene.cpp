@@ -15,6 +15,7 @@ MainScene::~MainScene()
 void MainScene::Init()
 {
 	// Vertices for a cube
+	/*
 	float vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
 		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
@@ -57,7 +58,7 @@ void MainScene::Init()
 		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-	};
+	};*/
 
 	m_Shader.CreateFromFile("../res/shaders/lighting.shader");
 	m_WhiteShader.CreateFromFile("../res/shaders/white.shader");
@@ -68,20 +69,23 @@ void MainScene::Init()
 
 	m_VertexArray.Bind();
 
-	m_VertexBuffer.Create(vertices, sizeof(vertices));
+
+	m_Model.LoadOBJ("../res/models/sphere.obj");
+
+	const std::vector<Vertex> vertices = m_Model.GetVertices();
+
+	m_VertexBuffer.Create((void*)vertices.data(), vertices.size() * sizeof(Vertex));
 
 	m_Layout.PushFloat(3); // X, Y, Z
 	m_Layout.PushFloat(2); // U, V
 	m_Layout.PushFloat(3); // Normal Vector
 
 	m_VertexArray.AddBuffer(m_VertexBuffer, m_Layout);
-
-
 }
 
 void MainScene::Update(float dt)
 {
-	//m_Camera.Update(dt);
+	m_Camera.Update(dt);
 }
 
 void MainScene::ImGui()
@@ -110,7 +114,7 @@ void MainScene::Draw()
 
 	m_Texture.Bind(0);
 	m_VertexArray.Bind();
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDrawArrays(GL_TRIANGLES, 0, m_Model.GetVertices().size());
 
 	m_WhiteShader.Use();
 	model = glm::mat4(1.0f);
@@ -122,5 +126,5 @@ void MainScene::Draw()
 	m_WhiteShader.SetMat4("projection", m_Camera.GetProjectionMatrix());
 
 	m_VertexArray.Bind();
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDrawArrays(GL_TRIANGLES, 0, m_Model.GetVertices().size());
 }

@@ -58,6 +58,7 @@ Window::Window() : m_Window(nullptr)
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEPTH_TEST);
 	glDebugMessageCallback(MessageCallback, 0);
+	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 Window::~Window()
@@ -86,7 +87,7 @@ void Window::Run()
 
 		SceneManager::ImGui();
 
-		ImGui::ShowDemoWindow();
+		//ImGui::ShowDemoWindow();
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
