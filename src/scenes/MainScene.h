@@ -6,7 +6,7 @@
 #include <gfx/buffers/IndexBuffer.h>
 #include <gfx/Texture2D.h>
 #include <gfx/PerspectiveCamera.h>
-#include <gfx/Model.h>
+#include <gfx/Mesh.h>
 #include <core/Window.h>
 
 class MainScene : public Scene
@@ -22,7 +22,7 @@ public:
 
 private:
 	glm::vec3 m_LightPos;
-	Model m_Model;
+	Mesh m_SphereMesh;
 	Window* m_Window;
 	Shader m_Shader;
 	Shader m_WhiteShader;

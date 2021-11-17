@@ -1,12 +1,13 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <core/Window.h>
 
 class PerspectiveCamera
 {
 public:
 	PerspectiveCamera();
-	PerspectiveCamera(float fov, float aspectRatio, float near, float far);
+	PerspectiveCamera(Window* window);
 	~PerspectiveCamera();
 
 	void Update(float dt);
@@ -18,8 +19,13 @@ public:
 	const glm::mat4& GetViewMatrix() { return m_ViewMatrix; }
 
 private:
-
 	void RecalcViewMatrix();
+
+private:
+	Window* m_Window;
+	
+	u32 prevEnterState;
+
 	float speed = 0.1f;
 	float m_MouseSens = 0.1f;
 

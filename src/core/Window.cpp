@@ -27,7 +27,7 @@ Window::Window() : m_Window(nullptr)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); Mac omega
 
-	m_Window = glfwCreateWindow(800, 600, "OpenGL Window", NULL, NULL);
+	m_Window = glfwCreateWindow(m_Width, m_Height, "OpenGL Window", NULL, NULL);
 	if (m_Window == nullptr)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -37,6 +37,7 @@ Window::Window() : m_Window(nullptr)
 	glfwMakeContextCurrent(m_Window);
 
 	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
+
 		glViewport(0, 0, width, height);
 	});
 
@@ -45,7 +46,7 @@ Window::Window() : m_Window(nullptr)
 		std::cout << "Failed to initialize GLAD" << std::endl;
 	}
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, m_Width, m_Height);
 
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
@@ -56,7 +57,7 @@ Window::Window() : m_Window(nullptr)
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEPTH_TEST);
 	glDebugMessageCallback(MessageCallback, 0);
-	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	HideCursor();
 }
 
 Window::~Window()

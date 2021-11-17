@@ -2,6 +2,7 @@
 
 GLFWwindow* Input::m_Window = nullptr;
 
+
 void Input::Init(Window* window)
 {
 	m_Window = window->GetRawPtr();
@@ -10,6 +11,11 @@ void Input::Init(Window* window)
 bool Input::GetKeyDown(u32 key)
 {
 	return glfwGetKey(m_Window, key) == GLFW_PRESS;
+}
+
+bool Input::GetKey(u32 key)
+{
+	return glfwGetKey(m_Window, key);
 }
 
 bool Input::GetLeftMouseClicked()

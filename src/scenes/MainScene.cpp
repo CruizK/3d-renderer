@@ -63,16 +63,16 @@ void MainScene::Init()
 	m_Shader.CreateFromFile("../res/shaders/lighting.shader");
 	m_WhiteShader.CreateFromFile("../res/shaders/white.shader");
 	m_Texture.LoadFromFile("../res/textures/container.jpg");
-	m_Camera = PerspectiveCamera(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+	m_Camera = PerspectiveCamera(m_Window);
 
 
 
 	m_VertexArray.Bind();
 
 
-	m_Model.LoadOBJ("../res/models/sphere.obj");
+	m_SphereMesh.LoadOBJ("../res/models/sphere.obj");
 
-	const std::vector<Vertex> vertices = m_Model.GetVertices();
+	const std::vector<Vertex>& vertices = m_SphereMesh.GetVertices();
 
 	m_VertexBuffer.Create((void*)vertices.data(), vertices.size() * sizeof(Vertex));
 
@@ -114,7 +114,7 @@ void MainScene::Draw()
 
 	m_Texture.Bind(0);
 	m_VertexArray.Bind();
-	glDrawArrays(GL_TRIANGLES, 0, m_Model.GetVertices().size());
+	glDrawArrays(GL_TRIANGLES, 0, m_SphereMesh.GetVertices().size());
 
 	m_WhiteShader.Use();
 	model = glm::mat4(1.0f);
@@ -126,5 +126,5 @@ void MainScene::Draw()
 	m_WhiteShader.SetMat4("projection", m_Camera.GetProjectionMatrix());
 
 	m_VertexArray.Bind();
-	glDrawArrays(GL_TRIANGLES, 0, m_Model.GetVertices().size());
+	glDrawArrays(GL_TRIANGLES, 0, m_SphereMesh.GetVertices().size());
 }
