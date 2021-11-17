@@ -4,7 +4,7 @@
 #include <core/Log.h>
 
 PerspectiveCamera::PerspectiveCamera():
-	m_ProjectionMatrix(glm::mat4(1.0f)), m_ViewMatrix(glm::mat4(1.0f)), m_Position(glm::vec3(0))
+	m_Window(nullptr), m_ProjectionMatrix(glm::mat4(1.0f)), m_ViewMatrix(glm::mat4(1.0f)), m_Position(glm::vec3(0))
 {
 }
 
@@ -16,7 +16,7 @@ PerspectiveCamera::PerspectiveCamera(Window* window)
 	m_Position = glm::vec3(1.0f, 1.0f, -5.0f);
 	RecalcViewMatrix();
 
-	prevEnterState = GLFW_RELEASE;
+	m_PrevEnterState = GLFW_RELEASE;
 }
 
 PerspectiveCamera::~PerspectiveCamera()
@@ -55,14 +55,13 @@ void PerspectiveCamera::Update(float dt)
 
 	u32 state = Input::GetKey(GLFW_KEY_ENTER);
 
-	if (state == GLFW_RELEASE && prevEnterState == GLFW_PRESS)
+	if (state == GLFW_RELEASE && m_PrevEnterState == GLFW_PRESS)
 	{
 		if (m_Window->IsCursorShown())m_Window->HideCursor();
 		else m_Window->ShowCursor();
 	}
 
-	prevEnterState = state;
-	//CORE_TRACE(Input::GetKeyUp(GLFW_KEY_ENTER));
+	m_PrevEnterState = state;
 
 	glm::vec2 mousePos = Input::GetMousePos();
 	if (!m_Window->IsCursorShown())

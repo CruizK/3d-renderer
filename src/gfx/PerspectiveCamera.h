@@ -24,7 +24,7 @@ private:
 private:
 	Window* m_Window;
 	
-	u32 prevEnterState;
+	u32 m_PrevEnterState;
 
 	float speed = 0.1f;
 	float m_MouseSens = 0.1f;

@@ -9,7 +9,6 @@
 ## Things that need to be done
 - [X] Perspective Camera
 - [X] Some sort of Input system
-- [ ] Framebuffer and probably a library integration to output an image from the current render state
 - [ ] Material System
 - [X] 3D Model Loading
 - [X] 2D Texture Loading
