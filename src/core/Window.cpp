@@ -16,8 +16,6 @@ void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLuint se
 {
 	if (type == GL_DEBUG_TYPE_ERROR)
 		CORE_ERROR("[OpenGL Error]: {0}", message);
-	else
-		CORE_TRACE("[OpenGL Debug]: {0}", message);
 }
 
 Window::Window() : m_Window(nullptr)

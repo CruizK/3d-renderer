@@ -3,6 +3,7 @@
 #include <fstream>
 #include <core/Log.h>
 #include <core/Core.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 Model::Model()
 {
@@ -72,4 +73,10 @@ void Model::LoadOBJ(const std::string& path)
     {
         CORE_ERROR("(Model Loading Error) Could not laod model at path: {0}", path);
     }
+}
+
+void Model::RecalcModelMatrix()
+{
+    m_ModelMatrix = glm::mat4(1.0f);
+    m_ModelMatrix = glm::translate(m_ModelMatrix, m_Position) * glm::rotate(m_ModelMatrix, m_Rotation, glm::vec3(0, 0, 0));
 }
