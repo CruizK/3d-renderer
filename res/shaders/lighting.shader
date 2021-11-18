@@ -37,8 +37,7 @@ uniform vec3 lightColor;
 void main()
 {
 	// ambient
-	float ambientStrength = 0.1;
-	vec3 ambient = ambientStrength * lightColor;
+	float ambient = 0.1;
 
 	//diffuse
 	// Make the normal vector, a unit vector
@@ -49,26 +48,24 @@ void main()
 	// dot will give cos(theta), in the dot product method, since both are unit vectors
 	// cos(theta) will be relative to the normal vector (in a cube's case pointing straight upward). Meaning the unit circle will start at the normal vector
 	// So if the light dir is directly above, it will be cos(theta) = 1, if the difference is 45 degrees it will be cos(theta) = 0.5
-	float diff = max(dot(norm, lightDir), 0.0);
-	vec3 diffuse = diff * lightColor;
+	float diffuse = max(dot(norm, lightDir), 0.0);
 	
-	// specular
-	float specularStrength = 0.3;
-	// Get the unit vector for viewDir
-	vec3 viewDir = normalize(viewPos - FragPos);
-	// Reflect the light direction by the normal
-	// which produces a vector that is theta degrees past the normal, where theta degrees is the angle between lightDir and normal
-	// Lightdir is negative because it is currently from FragPos to lightPos, instead of lightPos to FragPos
-	vec3 reflectDir = reflect(-lightDir, norm);
+	float specular = 0.0;
+	if (diffuse != 0.0)
+	{
+		// specular
+		float specularStrength = 0.5;
+		// Get the unit vector for viewDir
+		vec3 viewDir = normalize(viewPos - FragPos);
+		// Addition of two vectors will give us the halfway of that vector, then we normalize it
+		vec3 halfwayVec = normalize(viewDir + lightDir);
+		// We then get the angle between the normal and the halfway due to them being unit vectors
+		// And then take that or zero (as to ignore negative values) and take it to an abitrrary power
+		float specAmount = pow(max(dot(norm, halfwayVec), 0.0), 16);
+		specular = specAmount * specularStrength;
+	}
 
-	vec3 halfwayVec = normalize(viewDir + lightDir);
 
-	// We then get the angle between the reflect and view directions due to them being unit vectors
-	// And then take that or zero (as to ignore negative values) and take it to an abitrrary power
-	float spec = pow(max(dot(norm, halfwayVec), 0.0), 16);
-	vec3 specular = specularStrength * spec * lightColor;
-
-
-	vec3 result = (ambient + diffuse + specular) * objectColor;
+	vec3 result = (ambient + diffuse + specular) * lightColor * objectColor;
 	FragColor = vec4(result, 1.0);
 }
