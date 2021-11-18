@@ -9,7 +9,6 @@ public:
 	~VertexBuffer();
 
 	void Create(void *data, u32 size);
-//	void UploadSubData(void *data, u32 size, u32 offset);
 
 	void Bind() const;
 	void Unbind() const;

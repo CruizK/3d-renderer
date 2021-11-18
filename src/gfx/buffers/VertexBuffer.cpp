@@ -24,16 +24,6 @@ void VertexBuffer::Create(void *data, u32 size)
 	glNamedBufferStorage(m_RendererID, size, data, GL_DYNAMIC_STORAGE_BIT);
 }
 
-/*
-* Will no longer work with NamedBufferStorage, because it is immutable
-void VertexBuffer::UploadSubData(void *data, u32 size, u32 offset)
-{
-	// This won't work
-	Bind();
-	glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
-}
-*/
-
 void VertexBuffer::Bind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);

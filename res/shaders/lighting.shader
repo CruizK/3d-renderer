@@ -32,11 +32,10 @@ uniform sampler2D uTexture;
 uniform vec3 lightPos;
 uniform vec3 objectColor;
 uniform vec3 viewPos;
+uniform vec3 lightColor;
 
 void main()
 {
-	vec3 lightColor = vec3(1.0);
-
 	// ambient
 	float ambientStrength = 0.1;
 	vec3 ambient = ambientStrength * lightColor;

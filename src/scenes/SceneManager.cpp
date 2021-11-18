@@ -9,7 +9,7 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-
+	
 }
 
 void SceneManager::ChangeScene(Scene* scene)

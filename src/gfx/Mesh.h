@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <string>
+#include <gfx/buffers/VertexArray.h>
 
 struct Vertex
 {
@@ -18,9 +19,12 @@ public:
     ~Mesh();
 
     void LoadOBJ(const std::string& path);
-
-    const std::vector<Vertex>& GetVertices() { return m_Vertices; }
     
+    void Draw();
+
 private:
+    VertexArray m_VertexArray;
+    VertexBuffer m_VertexBuffer;
+    VertexBufferLayout m_Layout;
     std::vector<Vertex> m_Vertices;
 };

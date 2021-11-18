@@ -68,9 +68,24 @@ void Mesh::LoadOBJ(const std::string& path)
         }
 
         file.close();
+        m_VertexArray.Bind();
+
+        m_VertexBuffer.Create((void*)m_Vertices.data(), m_Vertices.size() * sizeof(Vertex));
+
+        m_Layout.PushFloat(3); // X, Y, Z
+        m_Layout.PushFloat(2); // U, V
+        m_Layout.PushFloat(3); // Normal Vector
+
+        m_VertexArray.AddBuffer(m_VertexBuffer, m_Layout);
     }
     else
     {
         CORE_ERROR("(Model Loading Error) Could not laod model at path: {0}", path);
     }
+}
+
+void Mesh::Draw()
+{
+    m_VertexArray.Bind();
+    glDrawArrays(GL_TRIANGLES, 0, m_Vertices.size());
 }

@@ -6,7 +6,7 @@
 #include <gfx/buffers/IndexBuffer.h>
 #include <gfx/Texture2D.h>
 #include <gfx/PerspectiveCamera.h>
-#include <gfx/Mesh.h>
+#include <gfx/Model.h>
 #include <core/Window.h>
 
 class MainScene : public Scene
@@ -23,13 +23,14 @@ public:
 private:
 	glm::vec3 m_LightPos;
 	Mesh m_SphereMesh;
+	Mesh m_CubeMesh;
+
+	Model m_PlaneModel;
+	Model m_SphereModel;
+	Model m_LightModel;
 	Window* m_Window;
 	Shader m_Shader;
 	Shader m_WhiteShader;
 	Texture2D m_Texture;
 	PerspectiveCamera m_Camera;
-	VertexBuffer m_VertexBuffer;
-	VertexArray m_VertexArray;
-	VertexBufferLayout m_Layout;
-	IndexBuffer m_IndexBuffer;
 };

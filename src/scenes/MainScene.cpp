@@ -14,51 +14,6 @@ MainScene::~MainScene()
 
 void MainScene::Init()
 {
-	// Vertices for a cube
-	/*
-	float vertices[] = {
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 0.0f, -1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, -1.0f, 0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, -1.0f, 0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, -1.0f, 0.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, -1.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f, -1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, -1.0f, 0.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-	};*/
 
 	m_Shader.CreateFromFile("../res/shaders/lighting.shader");
 	m_WhiteShader.CreateFromFile("../res/shaders/white.shader");
@@ -66,21 +21,15 @@ void MainScene::Init()
 	m_Camera = PerspectiveCamera(m_Window);
 
 
-
-	m_VertexArray.Bind();
-
-
 	m_SphereMesh.LoadOBJ("../res/models/sphere.obj");
 
-	const std::vector<Vertex>& vertices = m_SphereMesh.GetVertices();
+	m_SphereModel.SetMesh(m_SphereMesh);
+	m_LightModel.SetMesh(m_SphereMesh);
 
-	m_VertexBuffer.Create((void*)vertices.data(), vertices.size() * sizeof(Vertex));
+	m_SphereModel.SetColor(glm::vec3(0.5f, 0.5f, 0.7f));
 
-	m_Layout.PushFloat(3); // X, Y, Z
-	m_Layout.PushFloat(2); // U, V
-	m_Layout.PushFloat(3); // Normal Vector
-
-	m_VertexArray.AddBuffer(m_VertexBuffer, m_Layout);
+	m_LightModel.SetScale(glm::vec3(0.2f));
+	m_LightModel.SetColor(glm::vec3(228.0f / 255, 151.0f / 255, 89.0f / 255));
 }
 
 void MainScene::Update(float dt)
@@ -95,36 +44,16 @@ void MainScene::ImGui()
 
 void MainScene::Draw()
 {
-	// Big Square
-	m_Shader.Use();
-
 	glm::vec3 lightPos = glm::vec3(3.0f, 0.0f, 3.0f);
 	lightPos = glm::rotateY(lightPos, (float)glfwGetTime() * glm::radians(25.0f));
 
-	glm::mat4 model = glm::mat4(1.0f);
-
-	m_Shader.SetMat4("model", model);
-	m_Shader.SetMat4("view", m_Camera.GetViewMatrix());
-	m_Shader.SetMat4("projection", m_Camera.GetProjectionMatrix());
-	m_Shader.SetVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
+	m_Shader.Use();
 	m_Shader.SetVec3("lightPos", lightPos);
 	m_Shader.SetVec3("viewPos", m_Camera.GetPosition());
-	
-	
+	m_Shader.SetVec3("lightColor", m_LightModel.GetColor());
 
-	m_Texture.Bind(0);
-	m_VertexArray.Bind();
-	glDrawArrays(GL_TRIANGLES, 0, m_SphereMesh.GetVertices().size());
+	m_SphereModel.Draw(m_Camera, m_Shader, lightPos);
 
-	m_WhiteShader.Use();
-	model = glm::mat4(1.0f);
-	model = glm::translate(model, lightPos);
-	model = glm::scale(model, glm::vec3(0.2f));
-
-	m_WhiteShader.SetMat4("model", model);
-	m_WhiteShader.SetMat4("view", m_Camera.GetViewMatrix());
-	m_WhiteShader.SetMat4("projection", m_Camera.GetProjectionMatrix());
-
-	m_VertexArray.Bind();
-	glDrawArrays(GL_TRIANGLES, 0, m_SphereMesh.GetVertices().size());
+	m_LightModel.SetPosition(lightPos);
+	m_LightModel.Draw(m_Camera, m_WhiteShader, lightPos);
 }
