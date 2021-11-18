@@ -22,6 +22,12 @@ void MainScene::Init()
 
 
 	m_SphereMesh.LoadOBJ("../res/models/sphere.obj");
+	m_CubeMesh.LoadOBJ("../res/models/cube.obj");
+
+	m_PlaneModel.SetMesh(m_CubeMesh);
+
+	m_PlaneModel.SetPosition(glm::vec3(0, -3.0f, 0.0f));
+	m_PlaneModel.SetScale(glm::vec3(10, 0.2f, 10));
 
 	m_SphereModel.SetMesh(m_SphereMesh);
 	m_LightModel.SetMesh(m_SphereMesh);
@@ -29,7 +35,7 @@ void MainScene::Init()
 	m_SphereModel.SetColor(glm::vec3(0.5f, 0.5f, 0.7f));
 
 	m_LightModel.SetScale(glm::vec3(0.2f));
-	m_LightModel.SetColor(glm::vec3(228.0f / 255, 151.0f / 255, 89.0f / 255));
+	m_LightModel.SetColor(glm::vec3(1.0f));
 }
 
 void MainScene::Update(float dt)
@@ -53,6 +59,8 @@ void MainScene::Draw()
 	m_Shader.SetVec3("lightColor", m_LightModel.GetColor());
 
 	m_SphereModel.Draw(m_Camera, m_Shader, lightPos);
+	m_PlaneModel.Draw(m_Camera, m_Shader, lightPos);
+
 
 	m_LightModel.SetPosition(lightPos);
 	m_LightModel.Draw(m_Camera, m_WhiteShader, lightPos);

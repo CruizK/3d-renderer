@@ -60,9 +60,12 @@ void main()
 	// which produces a vector that is theta degrees past the normal, where theta degrees is the angle between lightDir and normal
 	// Lightdir is negative because it is currently from FragPos to lightPos, instead of lightPos to FragPos
 	vec3 reflectDir = reflect(-lightDir, norm);
+
+	vec3 halfwayVec = normalize(viewDir + lightDir);
+
 	// We then get the angle between the reflect and view directions due to them being unit vectors
 	// And then take that or zero (as to ignore negative values) and take it to an abitrrary power
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 16);
+	float spec = pow(max(dot(norm, halfwayVec), 0.0), 16);
 	vec3 specular = specularStrength * spec * lightColor;
 
 
