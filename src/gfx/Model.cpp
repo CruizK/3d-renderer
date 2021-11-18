@@ -23,6 +23,17 @@ void Model::Draw(PerspectiveCamera& camera, Shader& shader, const glm::vec3& lig
 	m_Mesh->Draw();
 }
 
+void Model::Draw(PerspectiveCamera& camera, Material* material, const glm::vec3& lightPos)
+{
+	Shader& shader = *material->Shader;
+	shader.Use();
+	shader.SetVec3("material.ambient", material->Ambient);
+	shader.SetVec3("material.diffuse", material->Diffuse);
+	shader.SetVec3("material.specular", material->Specular);
+	shader.SetFloat("material.shininess", material->Shininess);
+	Draw(camera, shader, lightPos);
+}
+
 void Model::RecalcModelMatrix()
 {
 	m_ModelMatrix = glm::mat4(1.0f);

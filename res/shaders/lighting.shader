@@ -28,6 +28,15 @@ in vec2 TexCoord;
 in vec3 FragPos;
 in vec3 Normal;
 
+struct Material {
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+	float shininess;
+};
+
+uniform Material material;
+
 uniform sampler2D uTexture;
 uniform vec3 lightPos;
 uniform vec3 objectColor;
@@ -37,7 +46,7 @@ uniform vec3 lightColor;
 void main()
 {
 	// ambient
-	float ambient = 0.1;
+	vec3 ambient = lightColor * material.ambient;
 
 	//diffuse
 	// Make the normal vector, a unit vector
@@ -48,9 +57,10 @@ void main()
 	// dot will give cos(theta), in the dot product method, since both are unit vectors
 	// cos(theta) will be relative to the normal vector (in a cube's case pointing straight upward). Meaning the unit circle will start at the normal vector
 	// So if the light dir is directly above, it will be cos(theta) = 1, if the difference is 45 degrees it will be cos(theta) = 0.5
-	float diffuse = max(dot(norm, lightDir), 0.0);
-	
-	float specular = 0.0;
+	float diff = max(dot(norm, lightDir), 0.0);
+	vec3 diffuse = lightColor * (diff * material.diffuse);
+
+	vec3 specular = vec3(0.0);
 	if (diffuse != 0.0)
 	{
 		// specular
@@ -61,11 +71,11 @@ void main()
 		vec3 halfwayVec = normalize(viewDir + lightDir);
 		// We then get the angle between the normal and the halfway due to them being unit vectors
 		// And then take that or zero (as to ignore negative values) and take it to an abitrrary power
-		float specAmount = pow(max(dot(norm, halfwayVec), 0.0), 16);
-		specular = specAmount * specularStrength;
+		float spec = pow(max(dot(norm, halfwayVec), 0.0), material.shininess);
+		specular = (spec * material.specular) * lightColor;
 	}
 
 
-	vec3 result = (ambient + diffuse + specular) * lightColor * objectColor;
+	vec3 result = ambient + diffuse + specular;
 	FragColor = vec4(result, 1.0);
 }
