@@ -4,7 +4,7 @@
 #include <gfx/Shader.h>
 #include <gfx/PerspectiveCamera.h>
 #include <gfx/Material.h>
-
+#include <gfx/Light.h>
 
 
 class Model
@@ -14,17 +14,16 @@ public:
 	~Model();
 
 	void SetMesh(Mesh& mesh) { m_Mesh = &mesh; }
-
 	void SetPosition(const glm::vec3& pos) { m_Position = pos; RecalcModelMatrix(); }
 	void SetColor(const glm::vec3& color) { m_Color = color; }
 	void SetScale(const glm::vec3& scale) { m_Scale = scale; RecalcModelMatrix(); }
 
-
-
+	const glm::vec3& GetPosition() { return m_Position; }
+	const glm::mat4& GetModelMatrix() { return m_ModelMatrix; }
+	const glm::vec3& GetScale() { return m_Scale; }
 	const glm::vec3& GetColor() { return m_Color; }
 
-	void Draw(PerspectiveCamera& camera, Material* material, const glm::vec3& lightPos);
-	void Draw(PerspectiveCamera& camera, Shader& shader, const glm::vec3& lightPos);
+	void Draw(PerspectiveCamera& camera, Material* material, const Light& light);
 
 private:
 	void RecalcModelMatrix();

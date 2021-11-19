@@ -25,6 +25,7 @@ public:
 
 	void SetMat4(const std::string &name, const glm::mat4 &value);
 	void SetFloat1v(const std::string &name, u32 count, float *value);
+	void SetInt(const std::string& name, int value);
 	void SetInt1v(const std::string &name, u32 count, int *value);
 	void SetFloat(const std::string &name, float value);
 	void SetVec2(const std::string &name, const glm::vec2 &value);
