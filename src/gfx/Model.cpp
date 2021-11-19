@@ -18,14 +18,13 @@ void Model::Draw(PerspectiveCamera& camera, Shader& shader, const glm::vec3& lig
 	shader.SetMat4("model", m_ModelMatrix);
 	shader.SetMat4("view", camera.GetViewMatrix());
 	shader.SetMat4("projection", camera.GetProjectionMatrix());
-	shader.SetVec3("objectColor", m_Color);
 
 	m_Mesh->Draw();
 }
 
 void Model::Draw(PerspectiveCamera& camera, Material* material, const glm::vec3& lightPos)
 {
-	Shader& shader = *material->Shader;
+	Shader& shader = *material->MShader;
 	shader.Use();
 	shader.SetVec3("material.ambient", material->Ambient);
 	shader.SetVec3("material.diffuse", material->Diffuse);

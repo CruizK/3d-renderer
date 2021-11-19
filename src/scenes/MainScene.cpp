@@ -21,6 +21,12 @@ void MainScene::Init()
 	m_Camera = PerspectiveCamera(m_Window);
 
 
+	m_Material.Ambient = glm::vec3(0.2f);
+	m_Material.Diffuse = glm::vec3(0.5f);
+	m_Material.Specular = glm::vec3(0.2f);
+	m_Material.Shininess = 32.0f;
+	m_Material.MShader = &m_Shader;
+
 	m_SphereMesh.LoadOBJ("../res/models/sphere.obj");
 	m_CubeMesh.LoadOBJ("../res/models/cube.obj");
 
@@ -58,8 +64,8 @@ void MainScene::Draw()
 	m_Shader.SetVec3("viewPos", m_Camera.GetPosition());
 	m_Shader.SetVec3("lightColor", m_LightModel.GetColor());
 
-	m_SphereModel.Draw(m_Camera, m_Shader, lightPos);
-	m_PlaneModel.Draw(m_Camera, m_Shader, lightPos);
+	m_SphereModel.Draw(m_Camera, &m_Material, lightPos);
+	//m_PlaneModel.Draw(m_Camera, &m_Material, lightPos);
 
 
 	m_LightModel.SetPosition(lightPos);

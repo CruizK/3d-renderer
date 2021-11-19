@@ -11,5 +11,5 @@ struct Material
     glm::vec3 Specular;
     float Shininess;
     Texture2D* DiffuseTexture;
-    Shader* Shader;
+    Shader* MShader;
 };

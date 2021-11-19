@@ -39,7 +39,6 @@ uniform Material material;
 
 uniform sampler2D uTexture;
 uniform vec3 lightPos;
-uniform vec3 objectColor;
 uniform vec3 viewPos;
 uniform vec3 lightColor;
 
@@ -61,7 +60,7 @@ void main()
 	vec3 diffuse = lightColor * (diff * material.diffuse);
 
 	vec3 specular = vec3(0.0);
-	if (diffuse != 0.0)
+	if (diff != 0.0)
 	{
 		// specular
 		float specularStrength = 0.5;

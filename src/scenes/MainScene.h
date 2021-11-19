@@ -7,6 +7,7 @@
 #include <gfx/Texture2D.h>
 #include <gfx/PerspectiveCamera.h>
 #include <gfx/Model.h>
+#include <gfx/Material.h>
 #include <core/Window.h>
 
 class MainScene : public Scene
@@ -28,6 +29,9 @@ private:
 	Model m_PlaneModel;
 	Model m_SphereModel;
 	Model m_LightModel;
+
+	Material m_Material;
+
 	Window* m_Window;
 	Shader m_Shader;
 	Shader m_WhiteShader;
