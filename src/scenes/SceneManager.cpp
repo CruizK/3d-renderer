@@ -1,6 +1,6 @@
 #include "SceneManager.h"
 
-Scene* SceneManager::m_Scene = nullptr;
+Scene* SceneManager::s_Scene = nullptr;
 
 SceneManager::SceneManager()
 {
@@ -14,26 +14,32 @@ SceneManager::~SceneManager()
 
 void SceneManager::ChangeScene(Scene* scene)
 {
-	if(m_Scene != nullptr)
-		delete m_Scene;
-	m_Scene = scene;
-	m_Scene->Init();
+	if(s_Scene != nullptr)
+		delete s_Scene;
+	s_Scene = scene;
+	s_Scene->Init();
 }
 
 void SceneManager::Update(float dt)
 {
-	if(m_Scene != nullptr)
-		m_Scene->Update(dt);
+	if(s_Scene != nullptr)
+		s_Scene->Update(dt);
+}
+
+void SceneManager::OnKey(int key, int scancode, int action, int mods)
+{
+	if(s_Scene != nullptr)
+		s_Scene->OnKey(key, scancode, action, mods);
 }
 
 void SceneManager::ImGui()
 {
-	if(m_Scene != nullptr)
-		m_Scene->ImGui();
+	if(s_Scene != nullptr)
+		s_Scene->ImGui();
 }
 
 void SceneManager::Draw()
 {
-	if(m_Scene != nullptr)
-		m_Scene->Draw();
+	if(s_Scene != nullptr)
+		s_Scene->Draw();
 }

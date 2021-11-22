@@ -11,9 +11,13 @@ public:
 	~PerspectiveCamera();
 
 	void Update(float dt);
-
+	void OnKey(int key, int scancode, int action, int mods);
 
 	const glm::vec3& GetPosition() { return m_Position; }
+	const glm::vec3& GetDirection() { return m_Direction; }
+	float GetPitch() { return m_Pitch; }
+	float GetYaw() { return m_Yaw; }
+
 
 	const glm::mat4& GetProjectionMatrix() { return m_ProjectionMatrix; }
 	const glm::mat4& GetViewMatrix() { return m_ViewMatrix; }
@@ -29,12 +33,12 @@ private:
 	float speed = 0.1f;
 	float m_MouseSens = 0.1f;
 
-	float m_Pitch = 0.0f;
-	float m_Yaw = 90.0f;
+	float m_Pitch = -13.8f;
+	float m_Yaw = 25.5f;
 
 	glm::vec2 m_LastMousePos = glm::vec2(800/2, 600/2);
 
-	glm::vec3 m_Direction = glm::vec3(0.0f, 0.0f, 1.0f);
+	glm::vec3 m_Direction = glm::vec3(0.676f, -0.327f, 0.660f);
 	glm::vec3 m_Up = glm::vec3(0.0f, 1.0f, 0.0f);
 	glm::vec3 m_Position;
 	glm::mat4 m_ProjectionMatrix;

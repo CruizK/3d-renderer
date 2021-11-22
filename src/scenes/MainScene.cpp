@@ -18,12 +18,12 @@ void MainScene::Init()
 
 	m_Shader.CreateFromFile("../res/shaders/lighting.shader");
 	m_WhiteShader.CreateFromFile("../res/shaders/white.shader");
-	m_Texture.LoadFromFile("../res/textures/white.png");
-	m_ContainerTexture.LoadFromFile("../res/textures/container.jpg");
+	m_Texture.LoadFromFile("../res/textures/wood.png");
+	m_ContainerTexture.LoadFromFile("../res/textures/white.png");
 	m_Camera = PerspectiveCamera(m_Window);
 
 	m_SphereMesh.LoadOBJ("../res/models/sphere.obj");
-	m_CubeMesh.LoadOBJ("../res/models/cube.obj");
+	m_PlaneMesh.LoadOBJ("../res/models/plane.obj");
 
 	Reset();
 }
@@ -31,7 +31,7 @@ void MainScene::Init()
 void MainScene::Reset()
 {
 	m_Material.Ambient = glm::vec3(1.0f);
-	m_Material.DiffuseTexture = &m_Texture;
+	m_Material.DiffuseTexture = &m_ContainerTexture;
 	m_Material.Specular = glm::vec3(0.2f);
 	m_Material.Shininess = 32.0f;
 	m_Material.MShader = &m_Shader;
@@ -42,23 +42,27 @@ void MainScene::Reset()
 	m_GroundMaterial.Shininess = 32.0f;
 	m_GroundMaterial.MShader = &m_Shader;
 
-	m_Light.Ambient = glm::vec3(1.0f);
-	m_Light.Diffuse = glm::vec3(1.0f);
+	m_Light.Position = glm::vec3(-3.0f, 2.0f, 0.0f);
+	m_LightModel.SetPosition(m_Light.Position);
+
+	m_Light.Ambient = glm::vec3(0.2f);
+	m_Light.Diffuse = glm::vec3(0.5f);
 	m_Light.Specular = glm::vec3(1.0f);
 
 	m_Light.Constant = 1.0f;
 	m_Light.Linear = 0.9f;
 	m_Light.Quadratic = 0.032f;
 
-	m_PlaneModel.SetMesh(m_CubeMesh);
 
-	m_PlaneModel.SetPosition(glm::vec3(0, -3.0f, 0.0f));
-	m_PlaneModel.SetScale(glm::vec3(10, 0.2f, 10));
 
-	m_SpherePos = glm::vec3(0);
+	m_PlaneModel.SetMesh(m_PlaneMesh);
 
-	glm::vec3 sphereBottom = glm::vec3(0, -1, 0);
-	glm::vec3 planeTop = glm::vec3(0, -3.0f + 0.2f, 0.0f);
+	m_PlaneModel.SetPosition(glm::vec3(0, -0.5f, 0.0f));
+	m_PlaneModel.SetScale(glm::vec3(10, 1.0f, 10));
+
+	m_SpherePos = glm::vec3(0, 3.0f, 0);
+	m_SphereModel.SetPosition(m_SpherePos);
+
 	m_Acceleration = glm::vec3(0);
 	m_Velocity = glm::vec3(0);
 
@@ -74,7 +78,7 @@ void MainScene::Reset()
 
 	m_Friction = 0.7f;
 
-	m_CanBounce = true;
+	m_CanBounce = false;
 }
 
 void MainScene::Update(float dt)
@@ -86,7 +90,7 @@ void MainScene::Update(float dt)
 	
 	float sphereRadius = 1.0f;
 	float sphereBottom = m_SpherePos.y - sphereRadius;
-	float planeTop = -3.0f + 0.2f; // Position + scale
+	float planeTop = -0.5f; // Position + scale
 
 	if (m_CanBounce) {
 		m_Velocity += m_Acceleration * dt;
@@ -107,7 +111,20 @@ void MainScene::Update(float dt)
 		m_SpherePos += m_Velocity * dt;
 		m_SphereModel.SetPosition(m_SpherePos);
 	}
+}
 
+void MainScene::OnKey(int key, int scancode, int action, int mods)
+{
+	m_Camera.OnKey(key, scancode, action, mods);
+
+	if(key == GLFW_KEY_D && action == GLFW_PRESS)
+	{
+		m_CanBounce = true;
+	}
+	else if(key ==GLFW_KEY_R && action == GLFW_PRESS)
+	{
+		Reset();
+	}
 }
 
 void MainScene::ImGui()
@@ -120,6 +137,15 @@ void MainScene::ImGui()
 		ImGui::DragFloat3("Velocity", (float*)&m_Velocity, 0.1f);
 		ImGui::DragFloat3("Acceleration", (float*)&m_Acceleration, 0.1f);
 		ImGui::InputFloat("Friction", &m_Friction, 0.05f, 0.1f, 1);
+	}
+
+	if (ImGui::CollapsingHeader("Camera"))
+	{
+		float pitch = m_Camera.GetPitch();
+		float yaw = m_Camera.GetYaw();
+		ImGui::DragFloat3("Position", (float*)&m_Camera.GetPosition(), 0.1f);
+		ImGui::DragFloat("Pitch", &pitch, 0.1f);
+		ImGui::DragFloat("Yaw", &yaw, 0.1f);
 	}
 
 	if (ImGui::CollapsingHeader("Material"))
@@ -147,10 +173,7 @@ void MainScene::ImGui()
 
 void MainScene::Draw()
 {
-	m_Light.Position = glm::vec3(3.0f, 0.0f, 3.0f);
-	m_Light.Position = glm::rotateY(m_Light.Position, (float)glfwGetTime() * glm::radians(25.0f));
-
+	m_LightModel.Draw(m_Camera, m_WhiteShader);	
 	m_SphereModel.Draw(m_Camera, &m_Material, m_Light);
 	m_PlaneModel.Draw(m_Camera, &m_GroundMaterial, m_Light);
-
 }

@@ -12,6 +12,16 @@ Model::~Model()
 
 }
 
+void Model::Draw(PerspectiveCamera& camera, Shader& shader)
+{
+	shader.Use();
+	shader.SetMat4("model", m_ModelMatrix);
+	shader.SetMat4("view", camera.GetViewMatrix());
+	shader.SetMat4("projection", camera.GetProjectionMatrix());
+
+	m_Mesh->Draw();
+}
+
 void Model::Draw(PerspectiveCamera& camera, Material* material, const Light& light)
 {
 	Shader& shader = *material->MShader;

@@ -23,6 +23,7 @@ public:
 	const glm::vec3& GetScale() { return m_Scale; }
 	const glm::vec3& GetColor() { return m_Color; }
 
+	void Draw(PerspectiveCamera& camera, Shader& shader);
 	void Draw(PerspectiveCamera& camera, Material* material, const Light& light);
 
 private:

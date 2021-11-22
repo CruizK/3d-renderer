@@ -21,13 +21,14 @@ public:
 	void Reset();
 
 	void Update(float dt) override;
+	void OnKey(int key, int scancode, int action, int mods) override;
 	void ImGui() override;
 	void Draw() override;
 
 private:
 	glm::vec3 m_LightPos;
 	Mesh m_SphereMesh;
-	Mesh m_CubeMesh;
+	Mesh m_PlaneMesh;
 	Mesh m_MonkeyMesh;
 
 	Model m_MonkeyModel;

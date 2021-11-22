@@ -41,6 +41,10 @@ Window::Window() : m_Window(nullptr)
 		glViewport(0, 0, width, height);
 	});
 
+	glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+		SceneManager::OnKey(key, scancode, action, mods);
+	});
+
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
@@ -55,6 +59,8 @@ Window::Window() : m_Window(nullptr)
 	ImGui_ImplOpenGL3_Init("#version 450 core");
 
 	glEnable(GL_DEBUG_OUTPUT);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
 	glDebugMessageCallback(MessageCallback, 0);
 	HideCursor();
@@ -76,7 +82,7 @@ void Window::Run()
 		lastFrame = currentFrame;
 		SceneManager::Update(deltaTime);
 
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		SceneManager::Draw();
 
