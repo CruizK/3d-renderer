@@ -33,8 +33,8 @@ private:
 	float speed = 0.1f;
 	float m_MouseSens = 0.1f;
 
-	float m_Pitch = -13.8f;
-	float m_Yaw = 25.5f;
+	float m_Pitch = -23.3f;
+	float m_Yaw = -99.6f;
 
 	glm::vec2 m_LastMousePos = glm::vec2(800/2, 600/2);
 

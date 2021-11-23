@@ -2,7 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Model::Model() :
-	m_Mesh(nullptr), m_ModelMatrix(glm::mat4(1.0f)), m_Position(glm::vec3(0.0f)), m_Color(glm::vec3(1.0f)), m_Scale(glm::vec3(1.0f))
+	m_Mesh(nullptr), m_ModelMatrix(glm::mat4(1.0f)), m_Position(glm::vec3(0.0f)), m_Color(glm::vec3(1.0f)), m_Scale(glm::vec3(1.0f)), m_Rotation(0)
 {
 
 }
@@ -55,4 +55,5 @@ void Model::RecalcModelMatrix()
 	m_ModelMatrix = glm::mat4(1.0f);
 	m_ModelMatrix = glm::translate(m_ModelMatrix, m_Position);
 	m_ModelMatrix = glm::scale(m_ModelMatrix, m_Scale);
+	m_ModelMatrix = glm::rotate(m_ModelMatrix, glm::radians(m_Rotation), glm::vec3(0, 1, 0));
 }

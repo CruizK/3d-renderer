@@ -26,6 +26,12 @@ void SceneManager::Update(float dt)
 		s_Scene->Update(dt);
 }
 
+void SceneManager::OnClick(const glm::vec2& mousePos)
+{
+	if(s_Scene != nullptr)
+		s_Scene->OnClick(mousePos);
+}
+
 void SceneManager::OnKey(int key, int scancode, int action, int mods)
 {
 	if(s_Scene != nullptr)

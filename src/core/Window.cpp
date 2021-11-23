@@ -45,6 +45,13 @@ Window::Window() : m_Window(nullptr)
 		SceneManager::OnKey(key, scancode, action, mods);
 	});
 
+	glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mode) {
+		double xPos, yPos;
+		glfwGetCursorPos(window, &xPos, &yPos);
+		if(button == GLFW_MOUSE_BUTTON_1 && action == GLFW_RELEASE)
+			SceneManager::OnClick(glm::vec2(xPos, yPos));
+	});
+
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;

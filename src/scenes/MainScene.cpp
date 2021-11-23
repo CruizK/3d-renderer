@@ -1,4 +1,5 @@
 #include "MainScene.h"
+#include "core/Input.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 #include <GLFW/glfw3.h>
@@ -24,6 +25,7 @@ void MainScene::Init()
 
 	m_SphereMesh.LoadOBJ("../res/models/sphere.obj");
 	m_PlaneMesh.LoadOBJ("../res/models/plane.obj");
+	m_MonkeyMesh.LoadOBJ("../res/models/monkey.obj");
 
 	Reset();
 }
@@ -45,8 +47,8 @@ void MainScene::Reset()
 	m_Light.Position = glm::vec3(-3.0f, 2.0f, 0.0f);
 	m_LightModel.SetPosition(m_Light.Position);
 
-	m_Light.Ambient = glm::vec3(0.2f);
-	m_Light.Diffuse = glm::vec3(0.5f);
+	m_Light.Ambient = glm::vec3(0.5f);
+	m_Light.Diffuse = glm::vec3(0.7f);
 	m_Light.Specular = glm::vec3(1.0f);
 
 	m_Light.Constant = 1.0f;
@@ -70,6 +72,9 @@ void MainScene::Reset()
 	m_LightModel.SetMesh(m_SphereMesh);
 
 	m_SphereModel.SetColor(glm::vec3(0.5f, 0.5f, 0.7f));
+
+	m_MonkeyModel.SetMesh(m_MonkeyMesh);
+	m_MonkeyModel.SetPosition(glm::vec3(-3.0f, 0.0f, 0.0f));
 
 	m_LightModel.SetScale(glm::vec3(0.2f));
 	m_LightModel.SetColor(glm::vec3(1.0f));
@@ -111,6 +116,44 @@ void MainScene::Update(float dt)
 		m_SpherePos += m_Velocity * dt;
 		m_SphereModel.SetPosition(m_SpherePos);
 	}
+
+	if(Input::GetKeyDown(GLFW_KEY_A))
+	{
+		float rot = m_MonkeyModel.GetRotation();
+		rot += 2.0f;
+		m_MonkeyModel.SetRotation(rot);
+	}
+	else if(Input::GetKeyDown(GLFW_KEY_S))
+	{
+		float rot = m_MonkeyModel.GetRotation();
+		rot -= 2.0f;
+		m_MonkeyModel.SetRotation(rot);	
+	}
+}
+
+void MainScene::OnClick(const glm::vec2& mousePos)
+{
+	// This is supposed to move the model to the camera, but that's not really possible due to
+	// Mouse being 2d and having no real way to move it in the third dimension so frig it
+	// Normalized Device Coordinates
+	float x = 2.0f * mousePos.x / 800.0f - 1.0f;
+	float y = 2.0f * mousePos.y / 600.0f - 1.0f;
+	CORE_TRACE("{0}, {1}", x , -y);
+
+	glm::vec4 clipCoords = glm::vec4(x, y, -1.0f, 1.0f);
+
+	glm::vec4 ray_eye = glm::inverse(m_Camera.GetProjectionMatrix()) * clipCoords;
+	ray_eye = glm::vec4(ray_eye.x, ray_eye.y, -1.0f, 0.0f);
+	
+	glm::vec4 ray_wor = glm::inverse(m_Camera.GetViewMatrix()) * ray_eye;
+
+	glm::vec4 worldPoint = ray_wor;
+	glm::vec4 normalizedWorldPoint = glm::normalize(worldPoint);
+	CORE_TRACE("{0}, {1}, {2}, {3}", worldPoint.x, worldPoint.y, worldPoint.z, worldPoint.w);
+	//CORE_TRACE("{0}, {1}, {2}, {3}", normalizedWorldPoint.x, normalizedWorldPoint.y, normalizedWorldPoint.z, normalizedWorldPoint.w);
+
+	//float z = m_MonkeyModel.GetPosition().z;
+	//m_MonkeyModel.SetPosition(glm::vec3(worldPoint.x, worldPoint.y, z));
 }
 
 void MainScene::OnKey(int key, int scancode, int action, int mods)
@@ -174,6 +217,7 @@ void MainScene::ImGui()
 void MainScene::Draw()
 {
 	m_LightModel.Draw(m_Camera, m_WhiteShader);	
+	m_MonkeyModel.Draw(m_Camera, &m_Material, m_Light);
 	m_SphereModel.Draw(m_Camera, &m_Material, m_Light);
 	m_PlaneModel.Draw(m_Camera, &m_GroundMaterial, m_Light);
 }

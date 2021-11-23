@@ -17,9 +17,11 @@ public:
 	void SetPosition(const glm::vec3& pos) { m_Position = pos; RecalcModelMatrix(); }
 	void SetColor(const glm::vec3& color) { m_Color = color; }
 	void SetScale(const glm::vec3& scale) { m_Scale = scale; RecalcModelMatrix(); }
+	void SetRotation(float rotation) { m_Rotation = rotation; RecalcModelMatrix(); }
 
 	const glm::vec3& GetPosition() { return m_Position; }
 	const glm::mat4& GetModelMatrix() { return m_ModelMatrix; }
+	float GetRotation() { return m_Rotation; }
 	const glm::vec3& GetScale() { return m_Scale; }
 	const glm::vec3& GetColor() { return m_Color; }
 
@@ -33,6 +35,7 @@ private:
 	
 	glm::mat4 m_ModelMatrix;
 	
+	float m_Rotation;
 	
 	glm::vec3 m_Color;
 	glm::vec3 m_Scale;

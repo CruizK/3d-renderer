@@ -13,7 +13,7 @@ PerspectiveCamera::PerspectiveCamera(Window* window)
 {
 	m_ProjectionMatrix = glm::perspective(glm::radians(45.0f), (float)((float)window->GetWidth() / (float)window->GetHeight()), 0.1f, 100.0f);
 	m_ViewMatrix = glm::mat4(1.0f);
-	m_Position = glm::vec3(-4.778f, 2.808f, -2.614f);
+	m_Position = glm::vec3(-0.698f, 3.882f, 4.974f);
 	RecalcViewMatrix();
 
 	m_PrevEnterState = GLFW_RELEASE;

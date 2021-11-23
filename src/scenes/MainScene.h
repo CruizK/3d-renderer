@@ -21,6 +21,7 @@ public:
 	void Reset();
 
 	void Update(float dt) override;
+	void OnClick(const glm::vec2& mousePos);
 	void OnKey(int key, int scancode, int action, int mods) override;
 	void ImGui() override;
 	void Draw() override;
