@@ -9,10 +9,10 @@
 ## Things that need to be done
 - [X] Perspective Camera
 - [X] Some sort of Input system
-- [ ] Material System
+- [X] Material System
 - [X] 3D Model Loading
 - [X] 2D Texture Loading
 - [X] Lighting System
-- [ ] Physics System
-- [ ] 3D Collision System
-- [ ] Simple Model/Entity System
+- [X] Simple Physics
+- [X] 3D Collision System
+- [X] Simple Model/Entity System

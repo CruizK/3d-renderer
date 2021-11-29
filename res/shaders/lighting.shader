@@ -83,7 +83,7 @@ void main()
 		vec3 halfwayVec = normalize(viewDir + lightDir);
 		// We then get the angle between the normal and the halfway due to them being unit vectors
 		// And then take that or zero (as to ignore negative values) and take it to an abitrrary power
-		float spec = pow(max(dot(norm, halfwayVec), 0.0), 32.0);
+		float spec = pow(max(dot(norm, halfwayVec), 0.0), material.shininess);
 		specular = light.specular * (spec * material.specular);
 		//specular = (spec * vec3(0.3));
 	}

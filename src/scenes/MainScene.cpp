@@ -44,7 +44,7 @@ void MainScene::Reset()
 	m_GroundMaterial.Shininess = 32.0f;
 	m_GroundMaterial.MShader = &m_Shader;
 
-	m_Light.Position = glm::vec3(-3.0f, 2.0f, 0.0f);
+	m_Light.Position = glm::vec3(-3.0f, 3.0f, 0.0f);
 	m_LightModel.SetPosition(m_Light.Position);
 
 	m_Light.Ambient = glm::vec3(0.5f);
@@ -74,7 +74,7 @@ void MainScene::Reset()
 	m_SphereModel.SetColor(glm::vec3(0.5f, 0.5f, 0.7f));
 
 	m_MonkeyModel.SetMesh(m_MonkeyMesh);
-	m_MonkeyModel.SetPosition(glm::vec3(-3.0f, 0.0f, 0.0f));
+	m_MonkeyModel.SetPosition(glm::vec3(-3.0f, 1.0f, 0.0f));
 
 	m_LightModel.SetScale(glm::vec3(0.2f));
 	m_LightModel.SetColor(glm::vec3(1.0f));
