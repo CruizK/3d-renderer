@@ -23,8 +23,8 @@ public:
 
 private:
 	float lastFrame = 0.0f;
-	u32 m_Width = 800;
-	u32 m_Height = 600;
+	u32 m_Width = 1280;
+	u32 m_Height = 720;
 	bool m_CursorShown = false;
 	GLFWwindow* m_Window;
 };

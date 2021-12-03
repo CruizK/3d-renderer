@@ -5,6 +5,10 @@
 #include <GLFW/glfw3.h>
 #include <imgui/imgui.h>
 
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
+
+
 MainScene::MainScene(Window* window):
 	m_Window(window)
 {
@@ -23,9 +27,9 @@ void MainScene::Init()
 	m_ContainerTexture.LoadFromFile("../res/textures/white.png");
 	m_Camera = PerspectiveCamera(m_Window);
 
-	m_SphereMesh.LoadOBJ("../res/models/sphere.obj");
+	m_SphereMesh.LoadOBJ("../res/models/sphere2.obj");
 	m_PlaneMesh.LoadOBJ("../res/models/plane.obj");
-	m_MonkeyMesh.LoadOBJ("../res/models/monkey.obj");
+	m_MonkeyMesh.LoadOBJ("../res/models/monkey2.obj");
 
 	Reset();
 }
@@ -133,27 +137,14 @@ void MainScene::Update(float dt)
 
 void MainScene::OnClick(const glm::vec2& mousePos)
 {
-	// This is supposed to move the model to the camera, but that's not really possible due to
-	// Mouse being 2d and having no real way to move it in the third dimension so frig it
-	// Normalized Device Coordinates
-	float x = 2.0f * mousePos.x / 800.0f - 1.0f;
-	float y = 2.0f * mousePos.y / 600.0f - 1.0f;
-	CORE_TRACE("{0}, {1}", x , -y);
+	if (!m_Window->IsCursorShown()) {
+		auto diff = m_Camera.GetPosition() - m_SpherePos;
+		diff = glm::normalize(diff);
 
-	glm::vec4 clipCoords = glm::vec4(x, y, -1.0f, 1.0f);
-
-	glm::vec4 ray_eye = glm::inverse(m_Camera.GetProjectionMatrix()) * clipCoords;
-	ray_eye = glm::vec4(ray_eye.x, ray_eye.y, -1.0f, 0.0f);
+		m_SpherePos += diff;
+		m_SphereModel.SetPosition(m_SpherePos);
+	}
 	
-	glm::vec4 ray_wor = glm::inverse(m_Camera.GetViewMatrix()) * ray_eye;
-
-	glm::vec4 worldPoint = ray_wor;
-	glm::vec4 normalizedWorldPoint = glm::normalize(worldPoint);
-	CORE_TRACE("{0}, {1}, {2}, {3}", worldPoint.x, worldPoint.y, worldPoint.z, worldPoint.w);
-	//CORE_TRACE("{0}, {1}, {2}, {3}", normalizedWorldPoint.x, normalizedWorldPoint.y, normalizedWorldPoint.z, normalizedWorldPoint.w);
-
-	//float z = m_MonkeyModel.GetPosition().z;
-	//m_MonkeyModel.SetPosition(glm::vec3(worldPoint.x, worldPoint.y, z));
 }
 
 void MainScene::OnKey(int key, int scancode, int action, int mods)
