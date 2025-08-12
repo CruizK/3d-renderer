@@ -1,4 +1,4 @@
-# graphics-project
+# 3d-renderer
 
 ## How to run
 1. Make Build Directory in root folder (`mkdir build && cd build`)
